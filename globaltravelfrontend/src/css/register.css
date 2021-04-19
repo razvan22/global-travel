@@ -1,0 +1,23 @@
+.register-body{
+   height: 100%;
+    background-image: url("../assets/bg.jpg");
+    background-position: center;
+    background-size: cover;
+}
+.form-container { 
+    margin-bottom: 25rem !important;
+    background-color: #0c1c2ca4;
+    width: 40vw !important;
+}
+
+@media screen and (max-width: 600px) {
+    .form-container{
+        width: 100vw !important;
+    }
+}
+
+@media screen and (max-width: 992px) {
+    .form-container{
+        width: 80vw !important;
+    }
+}

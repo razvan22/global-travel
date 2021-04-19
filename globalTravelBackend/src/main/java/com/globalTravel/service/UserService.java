@@ -16,8 +16,6 @@ public class UserService {
     @Autowired
     PostRepository postRepository;
 
-
-
     public User addNewUser(User user) {
         return userRepository.save(user);
     }
@@ -26,5 +24,8 @@ public class UserService {
         return userRepository.findAll();
     }
 
-
+    public boolean isEmailInUse(String email){
+       User user =  userRepository.findByEmail(email);
+        return user == null;
+    }
 }

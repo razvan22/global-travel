@@ -14,6 +14,7 @@ public class UserController {
     @Autowired
     UserService userService;
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping
     public User registerNewUser(@RequestBody User user){
         return userService.addNewUser(user);
@@ -23,4 +24,11 @@ public class UserController {
     public List<User> getAll(){
         return userService.getAll();
     }
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @GetMapping("/check={email}")
+    public boolean isEmailInUse(@PathVariable String email){
+        return userService.isEmailInUse(email);
+    }
+
 }

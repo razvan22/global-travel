@@ -1,11 +1,10 @@
 package com.globalTravel.entinty;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Data
@@ -15,6 +14,9 @@ public class Location {
     private Integer id;
     private String continent;
     private String country;
-    private String town;
     private String address;
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @OneToMany(mappedBy = "location")
+    private List<Post> posts;
 }

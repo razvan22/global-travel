@@ -1,0 +1,16 @@
+.login-container { 
+    height: 95vh !important;
+    background-image: url("../assets/bg.jpg");
+    background-position: center;
+    background-size:cover;
+}
+.form-body{
+    background-color: #0c1c2ca4;
+}
+.login-button{
+    border: none;
+    color: #0c1c2ce3;
+}
+.login-button:hover{
+    background-color: rgb(197, 197, 197);
+}

@@ -1,7 +1,6 @@
 package com.globalTravel.controller;
 
 import com.globalTravel.entinty.Comment;
-import com.globalTravel.entinty.Post;
 import com.globalTravel.repository.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -9,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/comment")
+@RequestMapping("api/post/comment")
 public class CommentController {
     @Autowired
     CommentRepository commentRepository;

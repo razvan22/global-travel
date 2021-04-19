@@ -1,6 +1,7 @@
 package com.globalTravel.entinty;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sun.istack.NotNull;
 import lombok.Data;
 
@@ -19,6 +20,8 @@ public class Comment {
     private Date commentDate;
     @NotNull
     private String comment;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @ManyToOne
     private Post post;
+
 }

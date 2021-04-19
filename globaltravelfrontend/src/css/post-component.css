@@ -1,0 +1,56 @@
+@import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@300;400;700&display=swap');
+
+.location-name{
+font-family: 'Poppins', sans-serif;
+}
+img{
+    object-fit: cover;
+    height: 30rem !important;
+}
+
+.rating-number{
+    top: -28rem;
+    left: -3rem;
+    color: white;
+    position: relative;
+    background-color: #E74C3C;
+}
+
+.post-body{
+    background-color:white !important;
+}
+
+.post-linkl:hover{
+    cursor:pointer;
+}
+
+.card-title{
+   color: #333333;
+   font-weight: 700;
+   font-family: 'M PLUS Rounded 1c', sans-serif !important;
+}
+
+.location{
+    color: rgba(255, 99, 71, 0.836);
+    font-weight: 400;
+    font-family: 'M PLUS Rounded 1c', sans-serif !important;
+}
+
+.publisher-name{
+    font-size: 1.10rem;
+    color: rgba(75, 74, 74, 0.7);
+}
+.info{
+    color: rgba(75, 74, 74, 0.754);
+}
+
+.card-text{
+    color: #343a40;
+    overflow: hidden !important;
+    max-height: 1.80rem !important;
+    transition: max-height 1s;
+}
+
+.card-text:hover{
+   max-height: 100rem !important;
+}

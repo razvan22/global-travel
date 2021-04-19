@@ -1,3 +1,18 @@
 .nav-bg{
-    background-color:#162B32;
+    background-color:#0C1C2C;
+}
+.nav-text{
+    font-weight: bold;
+    font-family: Poppins, sans-serif;
+}
+
+.bi-person-circle{
+ color: white;
+ font-size: 1.50rem;
+}
+.btn{
+    font-size: 0em !important;
+}
+a:hover{
+    text-decoration: none !important;
 }
