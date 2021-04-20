@@ -6,9 +6,9 @@
     font-family: Poppins, sans-serif;
 }
 
-.bi-person-circle{
- color: white;
- font-size: 1.50rem;
+.bi-box-arrow-in-down{
+   color: rgb(247, 102, 77);
+    font-size: 2rem;
 }
 .btn{
     font-size: 0em !important;

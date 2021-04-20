@@ -11,7 +11,7 @@ export default function RegisterView(props) {
   const [isValid, setIsValid] = useState(false);
 
   function redirectToHome(){
-      props.history.push("/")
+      props.history.push("/login")
   }
 
   function register() {

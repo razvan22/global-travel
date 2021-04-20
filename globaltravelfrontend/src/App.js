@@ -10,6 +10,7 @@ import HomeView from "./page/Home";
 import Navbar from "./components/Navbar";
 import RegisterView from "./page/Register";
 import PostPublish from "./page/PostPublish"
+import "bootstrap/dist/css/bootstrap.min.css";
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 
 function App() {

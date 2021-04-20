@@ -3,7 +3,10 @@ package com.globalTravel.service;
 import com.globalTravel.entinty.User;
 import com.globalTravel.repository.PostRepository;
 import com.globalTravel.repository.UserRepository;
+import com.globalTravel.security.MyUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,9 +18,12 @@ public class UserService {
     UserRepository userRepository;
     @Autowired
     PostRepository postRepository;
+    @Autowired
+    MyUserDetailsService userDetailsService;
 
-    public User addNewUser(User user) {
-        return userRepository.save(user);
+    public ResponseEntity<User> addNewUser(User user) {
+        userDetailsService.addUser(user);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     public List<User> getAll() {

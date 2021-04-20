@@ -1,0 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@300;400;700&display=swap');
+.comment-text{
+     color: rgba(75, 74, 74, 0.933);
+}
+
+.bi-person-lines-fill{
+    font-size: 1.50rem;
+}
+
+.comment{
+    background-color: rgba(220, 220, 220, 0.727);
+}
+
+.comment-author{
+    color: #064c68;
+    font-weight: bolder;
+}
+
+#date{
+    font-size: small;
+    color: rgba(75, 74, 74, 0.933);
+}
+
+.comment-bg{
+   background-color: aliceblue !important;
+}
+
+.bi-chat-dots{
+    font-size: 1rem;
+}

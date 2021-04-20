@@ -32,4 +32,10 @@ public class User {
     @OneToMany(mappedBy = "author")
     private List<Post> posts;
 
+    public User(){}
+    public User(String password, String name, String email) {
+        this.password = password;
+        this.name = name;
+        this.email = email;
+    }
 }

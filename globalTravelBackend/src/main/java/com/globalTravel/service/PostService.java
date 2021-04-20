@@ -37,8 +37,6 @@ public class PostService {
 
 
         for(PostImage image : images){
-            System.out.println("===========================");
-            System.out.println("IMAGE "+image);
             image.setPost(response);
             postImageRepository.save(image);
         }

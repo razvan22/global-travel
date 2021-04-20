@@ -15,7 +15,7 @@ export default function Navbar() {
               data-bs-toggle="dropdown"
               aria-expanded="false"
             >
-              <i className="bi bi-person-circle "></i>
+              <i className="bi bi-box-arrow-in-down"></i>
             </button>
             <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
               <Link to="/register" className="dropdown-item">

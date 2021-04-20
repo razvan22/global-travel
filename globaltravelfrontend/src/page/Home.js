@@ -18,8 +18,16 @@ export default function HomeView() {
     setList(data);
   }, []);
 
+function login() {
+  axios
+    .get("http://localhost:5500/api/user/whoami")
+    .then((res) => console.log(res))
+    .catch((err) => console.log(err));
+}
+
   return (
     <div>
+      <button onClick={login}>Click</button>
       <section>
         {postList.map((post) => (
           <PostComponent post={post} key={post.id} />
