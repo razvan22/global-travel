@@ -13,7 +13,7 @@ export default function PostComponent({ post }) {
           <div className="col-11 col-md-9 p-0 shadow post-body mt-4">
             <div className="card">
               <img
-                src={`http://localhost:5500/${post.images[0].imagePath}`}
+                src={`http://localhost:3001/${post.images[0].imagePath}`}
                 className="card-img-top img-fluid"
               />
               <h3 className="rounded-circle p-2 rating-number align-self-end">

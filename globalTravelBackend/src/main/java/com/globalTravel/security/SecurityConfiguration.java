@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.web.firewall.HttpFirewall;
 import org.springframework.security.web.firewall.StrictHttpFirewall;
 
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
@@ -30,7 +31,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.cors().disable()
+        http.cors()
+                .and()
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/api/post").permitAll()
@@ -40,10 +42,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/api/post/post").permitAll()
                 .and()
                 .formLogin()
-                    .loginPage("/login")
-                    .permitAll()
-                .defaultSuccessUrl("http://localhost:3000", true);
-
+                .loginPage("/rest/login").permitAll();
     }
 
     @Bean
@@ -63,3 +62,5 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     }
 }
+
+

@@ -32,15 +32,14 @@ public class MyUserDetailsService implements UserDetailsService {
             userRepository.save(newUser);
         }catch (Exception e){
             e.printStackTrace();
-        } return null;
+        } return newUser;
     }
 
     private UserDetails toUserDetails(User user){
         return org.springframework.security.core.userdetails.User
                 .withUsername(user.getEmail())
                 .password(user.getPassword())
-                .roles("USER")
-                .build();
+                .roles("USER").build();
     }
 
 
