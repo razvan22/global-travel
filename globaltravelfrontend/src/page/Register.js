@@ -10,21 +10,19 @@ export default function RegisterView(props) {
   const [password, setPassword] = useState("");
   const [isValid, setIsValid] = useState(false);
 
-  function redirectToLogin(){
+  function redirectToHome(){
       props.history.push("/login")
   }
 
-  async function registerNewUser() {
-    let response;
-
+  function register() {
+     
     if (isValid == true) {
       let user = {
         name: name,
         email: email,
         password: password,
       };
-
-      response = await axios
+      axios
         .post("http://localhost:5500/api/user", user, {
           headers: {
             "Access-Control-Allow-Origin": "*",
@@ -32,19 +30,18 @@ export default function RegisterView(props) {
           },
         })
         .then((res) => {
-          if (res.status === 201) {
-            successMessage();
-          }
+          
         })
-        .catch((err) => err);
+        .catch((err) => console.log(err));
+        redirectToHome();
     }
-    
-    
   }
 
   function checkEmail(e) {
     let email = e.target.value;
     setEmail(email);
+    console.log("Email: ", email);
+
     let emailElement = document.getElementsByClassName("email-field");
     emailElement[0].classList.remove("is-invalid");
 
@@ -77,16 +74,6 @@ export default function RegisterView(props) {
       element.value = "";
     }
   }
-
-  function successMessage() {
-    const alert = document.getElementById("alert-success");
-    alert.style.display = "block";
-    setTimeout(function () {
-      alert.style.display = "none";
-      redirectToLogin();
-    }, 2000);
-  }
-
 
   return (
     <div>
@@ -133,18 +120,10 @@ export default function RegisterView(props) {
                 type="submit"
                 id="register-button"
                 className="rounded btn-primary border-0 pl-4 pr-4"
-                onClick={() => registerNewUser()}
+                onClick={register}
               >
                 Register
               </button>
-            </div>
-            <div
-              className="alert alert-success"
-              id="alert-success"
-              role="alert"
-            >
-              New account has been registered with username
-              <a className="alert-link pl-2">{email}</a>
             </div>
           </div>
         </div>

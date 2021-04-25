@@ -1,25 +1,25 @@
-import React,{useState} from 'react'
+import React from 'react'
 import "../css/comment.css";
 
-export default function Comment(props) {
-    console.log("COMMENT PROPS : ", props);
-    
-    console.log(props.comment.commentDate);
-    
+export default function Comment() {
     return (
       <div>
-        <div className="row m-3 w-50  p-0 border rounded comment shadow-lg align-items-center">
+        <div className="row w-75 m-3 p-0 border border-secondary  rounded comment shadow-lg align-items-center">
           <div className="col-12 comment-bg border">
-            <div className="row p-0 m-0 ">
+            <div className="row p-0 m-0">
               <div className="col-12 border-bottom comment-author p-0 m-0">
                 <i className="bi bi-chat-dots"></i>
-                <span className="pl-1"> { props.comment.authorName}</span>
-                <span className="ml-3 text-muted" id="date">
-                  {props.comment.commentDate}
+                <span> Razvan-Petru</span>
+                <span className="ml-3" id="date">
+                  2021-03-21
                 </span>
               </div>
-              <div className="col-12 comment-text pt-1 m-0 p-0">
-                <p>{props.comment.comment}</p>
+              <div className="col-12 comment-text p-0 m-0">
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                  Velit omnis animi et iure laudantium vitae, praesentium optio,
+                  sapiente distinctio illo?
+                </p>
               </div>
             </div>
           </div>

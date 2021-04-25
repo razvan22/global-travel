@@ -2,6 +2,7 @@
     background-color:#0C1C2C;
 }
 .nav-text{
+    font-weight: bold;
     font-family: Poppins, sans-serif;
 }
 
@@ -14,19 +15,4 @@
 }
 a:hover{
     text-decoration: none !important;
-}
-.bi-box-arrow-in-left{
-    font-size: 1.35rem;
-}
-.bi-journal-plus{
-    font-size: 1.20rem;
-}
-.bi-person{
-    font-size: 1.40rem;
-}
-.bi-box-arrow-in-right{
-     font-size: 1.35rem;
-}
-.bi-person-plus{
-    font-size: 1.30rem;
 }

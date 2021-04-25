@@ -27,10 +27,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 
 
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.cors()
-                .and()
+        http.cors().disable()
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/api/post").permitAll()
@@ -39,7 +39,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/api/user/check").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/post/post").permitAll()
                 .and()
-                .formLogin().loginPage("/rest/login").permitAll();
+                .formLogin()
+                    .loginPage("/login")
+                    .permitAll()
+                .defaultSuccessUrl("http://localhost:3000", true);
 
     }
 
@@ -59,8 +62,4 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         web.httpFirewall(allowUrlEncodedSlashHttpFirewall());
 
     }
-
-
 }
-
-
