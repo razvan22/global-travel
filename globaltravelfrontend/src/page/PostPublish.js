@@ -1,24 +1,24 @@
 import _ from "lodash";
 import axios from "axios";
 import "../css/post-publish.css";
-import { Redirect } from "react-router";
 import { logDOM } from "@testing-library/dom";
-import { LockFill, SortUpAlt } from "react-bootstrap-icons";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
+import { UserContext } from "../global-context/UserContext";
+
 
 export default function PostPublish(props) {
   const [imgFile, setImgFile] = useState([]);
   const [countries, setCountries] = useState([]);
   const [continents, setContinents] = useState([]);
-  const [continentCode, setContinentCode] = useState();
+  const { user, setUser } = useContext(UserContext);
   const [countryName, setCountryName] = useState("Country");
   const [continentName, setContinentName] = useState("Continent");
 
   const [post, setPost] = useState({
     postDate: "",
-    author: { id: 1 },
+    author: user,
     location: {
-      continent: "",
+      continent: continentName,
       country: "",
       address: "",
     },
@@ -39,18 +39,20 @@ export default function PostPublish(props) {
 
   function selectContinentCode(e) {
     let continentCode = e.target.value;
-    setContinentCode(continentCode);
+    let selectedContinent =  continents.filter(continent => continent.code == continentCode);
+    setContinentName(selectedContinent[0].name);
+    post.location.continent = selectedContinent[0].name;
+    queryCountries(continentCode);
   }
 
-  function selectContinentName(e) {
-    let continentName = e.target.innerText;
-    setContinentName(continentName);
-    post.location.continent = e.target.text;
-    setCountryName("Country");
-  }
+
 
   function selectImgFiles(e) {
-    imgFileToUrl(e.target.files[0]);
+    let file = e.target.files[0];
+    if(file != null && file != undefined){
+      imgFileToUrl(file);
+    }
+    
   }
 
   async function publish() {
@@ -75,8 +77,6 @@ export default function PostPublish(props) {
         : "0" + (parseInt(date.getMinutes() / 5) * 5).toString()) +
       ":00";
 
-    console.log(post);
-
     if ((await saveImage()) == true) {
       await axios
         .post("http://localhost:5500/api/post/new", post, {
@@ -84,6 +84,8 @@ export default function PostPublish(props) {
         })
         .then((res) => {
           if (res.status === 200){
+            console.log(res.data);
+            
             redirectToPost(res.data.id)
           }
         })
@@ -117,12 +119,11 @@ export default function PostPublish(props) {
     }
   }
 
-  function print() {
-    console.log(post);
-  }
 
   function imgFileToUrl(file) {
     const reader = new FileReader();
+    console.log("IMG FILE IN imgFileToUrl :", file);
+
     reader.onloadend = () => {
       let url = reader.result;
       let imgObj = { file: file, url: url };
@@ -174,11 +175,11 @@ export default function PostPublish(props) {
       .then((res) => res.json())
       .then((data) => {
         return data.data.continents;
-      });
+      }).catch()
     setContinents(data);
   }, []);
 
-  async function queryCountries() {
+  async function queryCountries(continentCode) {
     let data = await fetch("https://countries.trevorblades.com/", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -238,22 +239,17 @@ export default function PostPublish(props) {
                 <select
                   className="form-select m-2"
                   value="Continent"
-                  onChange={selectContinentCode}
-                  onClick={queryCountries}
+                  onChange={(e) => selectContinentCode(e)}
                 >
                   <option>{continentName}</option>
                   {continents.map((continent) => (
-                    <option
-                      onClick={selectContinentName}
-                      key={continent.code}
-                      value={continent.code}
-                    >
+                    <option key={continent.code} value={continent.code}>
                       {continent.name}
                     </option>
                   ))}
                 </select>
                 <select
-                  className="form-select form-select-sm m-2"
+                  className="form-select form-select-sm m-2 w-25"
                   value="Country"
                   onChange={selectCountryName}
                 >
@@ -315,7 +311,10 @@ export default function PostPublish(props) {
           className="border mt-2 p-4 d-flex justify-content-end rounded"
           id="bg-dark"
         >
-          <button onClick={publish} className="rounded ml-5 btn-primary">
+          <button
+            onClick={() => publish()}
+            className="rounded ml-5 btn-primary"
+          >
             Publish
           </button>
         </div>

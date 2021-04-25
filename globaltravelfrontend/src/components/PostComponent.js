@@ -1,10 +1,78 @@
-import React from "react";
+import axios from 'axios';
 import "../css/post-component.css";
 import { Link } from "react-router-dom";
+import React, { useContext, useState, useEffect } from "react";
+import {PageUpdate} from "../global-context/UpdateContext";
+import { UserContext } from "../global-context/UserContext";
 
-export default function PostComponent({ post }) {
 
-  
+export default function PostComponent({ postObj }) {
+
+  let id = postObj.id;
+  const [post, setPost] = useState(postObj);
+  const [comment, setComment] = useState({
+    comment:     '',
+    authorName:  '',
+    commentDate: '',
+    post:{ id:   post.id}
+  });
+  const { user, setUser } = useContext(UserContext);
+  const { update, setUpdate} = useContext(PageUpdate);
+
+async function updateComments(){
+  await axios
+    .get(`http://localhost:5500/api/post/post=${post.id}`)
+    .then((res)=> {
+      if(res.status === 200 ){
+        setPost(res.data)
+      }
+    })
+    .catch((err) => err);  
+}
+
+ async function commentToPost(){
+    let date = new Date();
+    comment.commentDate =
+      date.getFullYear().toString() +
+      "-" +
+      ((date.getMonth() + 1).toString().length == 2
+        ? (date.getMonth() + 1).toString()
+        : "0" + (date.getMonth() + 1).toString()) +
+      "-" +
+      (date.getDate().toString().length == 2
+        ? date.getDate().toString()
+        : "0" + date.getDate().toString()) +
+      " " +
+      (date.getHours().toString().length == 2
+        ? date.getHours().toString()
+        : "0" + date.getHours().toString()) +
+      ":" +
+      ((parseInt(date.getMinutes() / 5) * 5).toString().length == 2
+        ? (parseInt(date.getMinutes() / 5) * 5).toString()
+        : "0" + (parseInt(date.getMinutes() / 5) * 5).toString()) +
+      ":00";
+      comment.authorName = user.name
+
+        let inputField = document.getElementById(`comment-input-field${post.id}`);
+        inputField.value = ''
+        comment.commentDate = null;
+        comment.comment = '';
+
+        
+      await axios
+        .post("http://localhost:5500/api/post/comment", comment, {
+          headers: { "Content-Type": "application/json" },
+        })
+        .then((res) => {
+          if(res.status === 200){
+            updateComments();
+          }
+        } )
+        .catch((error) => error);
+
+}
+
+
 
   return (
     <div>
@@ -27,7 +95,7 @@ export default function PostComponent({ post }) {
                   className="post-link"
                   to={{
                     pathname: `/post/${post.id}`,
-                    data: post
+                    data: post,
                   }}
                 >
                   <h2 className="card-title pb-2">{post.title}</h2>
@@ -40,8 +108,113 @@ export default function PostComponent({ post }) {
                 <div className="border-top">
                   <h6 className="pt-2 info">
                     <i className="bi bi-clock"></i> {post.postDate}
-                    <i className="bi bi-chat-text ml-5"></i> 23 comments
+                    <span id="comment-collapse">
+                      <i
+                        className="bi bi-chat-text ml-5"
+                        data-bs-toggle="collapse"
+                        href={`#collapseExample${id}`}
+                        role="button"
+                        aria-expanded="false"
+                        aria-controls={`collapseExample${id}`}
+                      >
+                        {" "}
+                      </i>
+                      <span
+                        className="pl-2"
+                        data-bs-toggle="collapse"
+                        href={`#collapseExample${id}`}
+                        role="button"
+                        aria-expanded="false"
+                        aria-controls={`collapseExample${id}`}
+                      >
+                        {post.comments.length}
+                      </span>
+                    </span>
                   </h6>
+                  {post.comments.length > 0 ? (
+                    <div>
+                      <div
+                        className="collapse border rounded mt-4 comment-section"
+                        id={`collapseExample${id}`}
+                      >
+                        {post.comments.map((comment) => (
+                          <div
+                            className=" w-50 border m-3 shadow comment-bg"
+                            key={comment.id}
+                          >
+                            <div className=" pl-2 border-bottom text-body ">
+                              {comment.authorName}
+                              <span className="text-muted date pl-5 ml-5">
+                                {comment.commentDate}
+                              </span>
+                            </div>
+                            <p className="p-1 m-0 text-muted comment-content">
+                              {comment.comment}
+                            </p>
+                          </div>
+                        ))}
+                        {user != null ? (
+                          <div className="input-group p-3 w-75 mt-5">
+                            <input
+                              type="text"
+                              className="form-control"
+                              placeholder="comment..."
+                              aria-label="Username"
+                              aria-describedby="basic-addon1"
+                              id={`comment-input-field${post.id}`}
+                              onChange={(e) =>
+                                (comment.comment = e.target.value)
+                              }
+                            />
+                            <button
+                              onClick={commentToPost}
+                              className="border rounded bg-primary border-start-0"
+                              type="button"
+                              id="button-addon2"
+                            >
+                              <i className="bi bi-reply"></i>
+                            </button>
+                          </div>
+                        ) : (
+                          <div></div>
+                        )}
+                      </div>
+                    </div>
+                  ) : (
+                    <div>
+                      <div
+                        className="collapse border rounded mt-4 comment-section"
+                        id={`collapseExample${id}`}
+                      >
+                        {user != null ? (
+                          <div className="input-group p-3 w-75 mt-5">
+                            <input
+                              type="text"
+                              className="form-control"
+                              placeholder="comment..."
+                              aria-label="Username"
+                              aria-describedby="basic-addon1"
+                              onChange={(e) =>
+                                (comment.comment = e.target.value)
+                              }
+                            />
+                            <button
+                              onClick={(e) => {
+                                commentToPost();
+                              }}
+                              className="border rounded bg-primary border-start-0"
+                              type="button"
+                              id="button-addon2"
+                            >
+                              <i className="bi bi-reply"></i>
+                            </button>
+                          </div>
+                        ) : (
+                          <div></div>
+                        )}
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
