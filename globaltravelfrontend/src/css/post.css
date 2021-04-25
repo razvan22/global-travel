@@ -19,5 +19,9 @@
     font-size: 1rem;
     color: rgba(255, 99, 71, 0.836) !important;
     font-weight: 400 !important; 
-   font-family: 'M PLUS Rounded 1c', sans-serif !important !important;
+   font-family: 'M PLUS Rounded 1c', sans-serif !important ;
+}
+
+#spinner{
+    margin-top: 22%;
 }

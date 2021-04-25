@@ -8,12 +8,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
 
-@Configuration
+@Service
 public class MyUserDetailsService implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
-    private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+
+    private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
     public BCryptPasswordEncoder getEncoder(){return encoder;}
 
     @Override
@@ -21,9 +23,8 @@ public class MyUserDetailsService implements UserDetailsService {
         User user = userRepository.findByEmail(email);
         if (user == null){
             throw new UsernameNotFoundException("User with email :"+email+" was not found.");
-        }else{
-            return toUserDetails(user);
         }
+        return toUserDetails(user);
     }
 
     public User addUser(User user){

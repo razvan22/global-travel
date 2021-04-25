@@ -1,39 +1,45 @@
-import React from "react";
+import React, { useState, useContext } from "react";
 import axios from "axios";
 import "../css/login.css";
+import { UserContext } from "../global-context/UserContext";
 
 export default function Login(props) {
-
+  const { user, setUser } = useContext(UserContext);
+  const [email, setEmail] = useState({})
+  const [password, setPassword] = useState({})
 
 async function login(){
+  const user = {
+    email: email,
+    password: password,
+  };
+  const response =  await axios
+    .post("http://localhost:5500/user-login", user, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+    .then((res) => res)
+    .catch((err) => err);
+    
+    if(response.status == 200){
+      setUser(response.data)
+      props.history.push(`/`);
+    } else{
+      showErrorMessage();
+    }
 }
 
- async function springLogin() {
-      const credentials =
-        "username=" +
-        encodeURIComponent("anastasia@gmail.com") +
-        "&password=" +
-        encodeURIComponent("password");
+function showErrorMessage(){
+  
+  const alert = document.getElementById('alert');
+  alert.style.display = 'block';
+  setTimeout(function () {
+    alert.style.display = "none";
+  }, 3000);
+}
 
-      let response = await fetch("http://localhost:3001/rest/login", {
-        method: "POST",
-        redirect: "manual",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: credentials,
-      });
-      console.log("CREDEN",credentials);
-      
-      console.log(response)
-      if (response.status==500) {
 
-        window.confirm("Inloggningen misslyckades");
-      } else {
-        console.log("RESPONSE", response);
-        
-       console.log("SUCCESS");
-       
-      }
-  }
 
 
   return (
@@ -49,6 +55,7 @@ async function login(){
               className="m-3 form-control w-50"
               placeholder="email"
               required
+              onChange={(e) => setEmail(e.target.value)}
             />
             <input
               type="password"
@@ -56,12 +63,21 @@ async function login(){
               placeholder="password"
               name="password"
               required
+              onChange={(e) => setPassword(e.target.value)}
             />
             <button
+            type="submit"
               className="m-3 pl-4 pr-4 rounded login-button mb-5"
+              onClick={(e) => {
+                e.preventDefault();
+                login();
+              }}
             >
               Log in
             </button>
+            <div className="alert alert-danger" id="alert" role="alert">
+              Check your username and password and try again !
+            </div>
           </form>
         </div>
       </div>

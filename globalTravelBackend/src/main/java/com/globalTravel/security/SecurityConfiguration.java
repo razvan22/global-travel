@@ -12,7 +12,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.web.firewall.HttpFirewall;
 import org.springframework.security.web.firewall.StrictHttpFirewall;
 
-
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
@@ -28,7 +27,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 
 
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors()
@@ -41,8 +39,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/api/user/check").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/post/post").permitAll()
                 .and()
-                .formLogin()
-                .loginPage("/rest/login").permitAll();
+                .formLogin().loginPage("/rest/login").permitAll();
+
     }
 
     @Bean
@@ -61,6 +59,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         web.httpFirewall(allowUrlEncodedSlashHttpFirewall());
 
     }
+
+
 }
 
 

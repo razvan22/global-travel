@@ -48,9 +48,32 @@ img{
     color: #343a40;
     overflow: hidden !important;
     max-height: 1.80rem !important;
-    transition: max-height 1s;
+    transition-duration: 1s;
 }
 
 .card-text:hover{
    max-height: 100rem !important;
+}
+
+#comment-collapse{
+    transition-duration: 200ms;
+}
+
+#comment-collapse:hover{
+    cursor: pointer;
+    color: rgba(255, 99, 71, 0.836) !important;
+}
+.date{
+    font-size: 0.70rem !important;
+}
+.bi-reply{
+    color:aliceblue;
+    font-size: 1.40rem;
+}
+.comment-content{
+    font-size: 0.75rem;
+}
+
+.comment-section {
+    background-color: rgba(27, 27, 28, 0.083);
 }

@@ -1,8 +1,13 @@
 import "../css/nav.css";
-import React from "react";
+import UserMenu from "./UserMenu";
 import {Link} from "react-router-dom";
+import React,{useContext} from "react";
+import AnonymousMenu from "./AnonymousMenu";
+import { UserContext } from "../global-context/UserContext";
 
 export default function Navbar() {
+  const {user, setUser} = useContext(UserContext);
+
   return (
     <div>
       <nav className="navbar nav-bg fixed-top">
@@ -13,17 +18,11 @@ export default function Navbar() {
               type="button"
               id="dropdownMenuButton1"
               data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
+              aria-expanded="false">
               <i className="bi bi-box-arrow-in-down"></i>
             </button>
             <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-              <Link to="/register" className="dropdown-item">
-                Register
-              </Link>
-              <Link to="/login" className="dropdown-item">
-                Login
-              </Link>
+            {user == null ? <AnonymousMenu /> : <UserMenu/>}
             </ul>
           </div>
           <Link to="/">
@@ -32,7 +31,6 @@ export default function Navbar() {
         </div>
       </nav>
       <div className="mb-5 h-25">
-        <h1 className=""></h1>
       </div>
     </div>
   );
