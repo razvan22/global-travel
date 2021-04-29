@@ -32,10 +32,29 @@ public class User {
     @OneToMany(mappedBy = "author")
     private List<Post> posts;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @OneToMany(mappedBy = "author")
+    private List<PostRating> ratings;
+
+
+
+
     public User(){}
     public User(String password, String name, String email) {
         this.password = password;
         this.name = name;
         this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getEmail() {
+        return email;
     }
 }

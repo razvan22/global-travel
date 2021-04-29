@@ -2,10 +2,6 @@ import React,{useState} from 'react'
 import "../css/comment.css";
 
 export default function Comment(props) {
-    console.log("COMMENT PROPS : ", props);
-    
-    console.log(props.comment.commentDate);
-    
     return (
       <div>
         <div className="row m-3 w-50  p-0 border rounded comment shadow-lg align-items-center">

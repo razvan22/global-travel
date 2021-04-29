@@ -4,6 +4,7 @@ import PostComponent from "../components/PostComponent";
 
 export default function HomeView() {
   const [postList, setList] = useState([]);
+
   useEffect(async () => {
     let data = await axios
       .get("http://localhost:5500/api/post")

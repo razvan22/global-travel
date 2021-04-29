@@ -25,12 +25,12 @@ function App() {
           <Navbar />
           <Switch>
             <Route path="/login" component={Login} />
-            <PageUpdate.Provider value={{update, setUpdate}}>
+            <Route path="/register" component={RegisterView} />
+            <Route path="/publish" exact component={PostPublish} />
+            <PageUpdate.Provider value={{ update, setUpdate }}>
               <Route path="/post/:id" component={Post} />
               <Route path="/" exact component={HomeView} />
             </PageUpdate.Provider>
-            <Route path="/register" component={RegisterView} />
-            <Route path="/publish" exact component={PostPublish} />
           </Switch>
         </UserContext.Provider>
       </div>

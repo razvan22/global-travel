@@ -34,4 +34,7 @@ public class Post {
     @OneToMany(mappedBy = "post")
     private List<PostImage> images;
 
+    @OneToMany(mappedBy = "post")
+    private List<PostRating> ratings;
+
 }

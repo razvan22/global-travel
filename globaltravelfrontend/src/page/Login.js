@@ -48,7 +48,7 @@ function showErrorMessage(){
         <h2 className="display-3 text-center p-5 ">GlobaL TraveL</h2>
         <div className="row justify-content-center">
           <form className="col-12 col-md-6 d-flex flex-column align-items-center rounded form-body">
-            <h4 className="display-4 text-center text-white m-5">Log in</h4>
+            <h4 className="display-4 text-center text-white m-2">Log in</h4>
             <input
               type="text"
               name="username"

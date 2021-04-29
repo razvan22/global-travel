@@ -1,7 +1,7 @@
 import _ from "lodash";
 import axios from "axios";
 import "../css/post-publish.css";
-import { logDOM } from "@testing-library/dom";
+import getTime from "../methods/GetTime";
 import React, { useEffect, useState, useContext } from "react";
 import { UserContext } from "../global-context/UserContext";
 
@@ -57,25 +57,7 @@ export default function PostPublish(props) {
 
   async function publish() {
     let date = new Date();
-    post.postDate =
-      date.getFullYear().toString() +
-      "-" +
-      ((date.getMonth() + 1).toString().length == 2
-        ? (date.getMonth() + 1).toString()
-        : "0" + (date.getMonth() + 1).toString()) +
-      "-" +
-      (date.getDate().toString().length == 2
-        ? date.getDate().toString()
-        : "0" + date.getDate().toString()) +
-      " " +
-      (date.getHours().toString().length == 2
-        ? date.getHours().toString()
-        : "0" + date.getHours().toString()) +
-      ":" +
-      ((parseInt(date.getMinutes() / 5) * 5).toString().length == 2
-        ? (parseInt(date.getMinutes() / 5) * 5).toString()
-        : "0" + (parseInt(date.getMinutes() / 5) * 5).toString()) +
-      ":00";
+    post.postDate = getTime();
 
     if ((await saveImage()) == true) {
       await axios
@@ -84,8 +66,6 @@ export default function PostPublish(props) {
         })
         .then((res) => {
           if (res.status === 200){
-            console.log(res.data);
-            
             redirectToPost(res.data.id)
           }
         })
@@ -122,8 +102,6 @@ export default function PostPublish(props) {
 
   function imgFileToUrl(file) {
     const reader = new FileReader();
-    console.log("IMG FILE IN imgFileToUrl :", file);
-
     reader.onloadend = () => {
       let url = reader.result;
       let imgObj = { file: file, url: url };

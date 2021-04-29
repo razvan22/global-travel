@@ -1,10 +1,11 @@
 import axios from 'axios';
 import "../css/post-component.css";
 import { Link } from "react-router-dom";
-import React, { useContext, useState, useEffect } from "react";
+import getTime from '../methods/GetTime'; 
 import {PageUpdate} from "../global-context/UpdateContext";
 import { UserContext } from "../global-context/UserContext";
-
+import React, { useContext, useState, useEffect } from "react";
+import { CalculatePostRating} from "../methods/PostRating.js";
 
 export default function PostComponent({ postObj }) {
 
@@ -19,7 +20,7 @@ export default function PostComponent({ postObj }) {
   const { user, setUser } = useContext(UserContext);
   const { update, setUpdate} = useContext(PageUpdate);
 
-async function updateComments(){
+  async function updateComments(){
   await axios
     .get(`http://localhost:5500/api/post/post=${post.id}`)
     .then((res)=> {
@@ -28,55 +29,32 @@ async function updateComments(){
       }
     })
     .catch((err) => err);  
-}
+  }
 
- async function commentToPost(){
-    let date = new Date();
-    comment.commentDate =
-      date.getFullYear().toString() +
-      "-" +
-      ((date.getMonth() + 1).toString().length == 2
-        ? (date.getMonth() + 1).toString()
-        : "0" + (date.getMonth() + 1).toString()) +
-      "-" +
-      (date.getDate().toString().length == 2
-        ? date.getDate().toString()
-        : "0" + date.getDate().toString()) +
-      " " +
-      (date.getHours().toString().length == 2
-        ? date.getHours().toString()
-        : "0" + date.getHours().toString()) +
-      ":" +
-      ((parseInt(date.getMinutes() / 5) * 5).toString().length == 2
-        ? (parseInt(date.getMinutes() / 5) * 5).toString()
-        : "0" + (parseInt(date.getMinutes() / 5) * 5).toString()) +
-      ":00";
-      comment.authorName = user.name
-
-        let inputField = document.getElementById(`comment-input-field${post.id}`);
-        inputField.value = ''
-        comment.commentDate = null;
-        comment.comment = '';
-
-        
-      await axios
+  async function commentToPost(){
+    comment.commentDate = getTime();
+    comment.authorName = user.name
+    let inputField = document.getElementById(`comment-input-field${post.id}`);
+    await axios
         .post("http://localhost:5500/api/post/comment", comment, {
           headers: { "Content-Type": "application/json" },
         })
         .then((res) => {
           if(res.status === 200){
             updateComments();
+            inputField.value = "";
+            comment.commentDate = null;
+            comment.comment = "";
           }
         } )
         .catch((error) => error);
-
-}
+  }
 
 
 
   return (
     <div>
-      <div className="container">
+      <div className="container mb-5">
         <div className="row justify-content-center mt-5 pt-4">
           <div className="col-11 col-md-9 p-0 shadow post-body mt-4">
             <div className="card">
@@ -84,9 +62,11 @@ async function updateComments(){
                 src={`http://localhost:5500/${post.images[0].imagePath}`}
                 className="card-img-top img-fluid"
               />
-              <h3 className="rounded-circle p-2 rating-number align-self-end">
-                7.2
-              </h3>
+              <h5 className="rounded-circle text-center pt-3 rating-number align-self-end ">
+                {CalculatePostRating(post.ratings) === 0
+                  ? "N/A"
+                  : CalculatePostRating(post.ratings)}
+              </h5>
               <h6 className="align-self-end pr-5 pt-0 pb-0 m-0 publisher-name">
                 <i className="bi bi-person-fill"> </i>- {post.author.name}
               </h6>
@@ -103,7 +83,7 @@ async function updateComments(){
                     <i className="bi bi-geo-alt-fill"> </i>{" "}
                     {post.location.continent + "/" + post.location.country}
                   </h5>
-                  <p className="card-text">{post.content}</p>
+                  <p className="card-text pb-3">{post.content}</p>
                 </Link>
                 <div className="border-top">
                   <h6 className="pt-2 info">
@@ -194,6 +174,7 @@ async function updateComments(){
                               placeholder="comment..."
                               aria-label="Username"
                               aria-describedby="basic-addon1"
+                              id={`comment-input-field${post.id}`}
                               onChange={(e) =>
                                 (comment.comment = e.target.value)
                               }

@@ -1,8 +1,6 @@
+import React, { useState } from "react";
 import axios from "axios";
 import "../css/register.css";
-import React, { useState } from "react";
-import { Redirect } from "react-router-dom";
-
 
 export default function RegisterView(props) {
   const [name, setName] = useState("");
@@ -91,7 +89,7 @@ export default function RegisterView(props) {
   return (
     <div>
       <div className="container-fluid register-body d-flex flex-column  align-items-center">
-        <h2 className="display-3 p-5">GlobaL TraveL</h2>
+        <h2 className="display-3 mt-5">GlobaL TraveL</h2>
         <div className="container form-container rounded text-white">
           <h3 className="text-center display-4 pb-2">Register</h3>
           <div className="row justify-content-center pb-2 ">

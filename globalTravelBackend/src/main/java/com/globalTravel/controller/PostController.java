@@ -1,6 +1,8 @@
 package com.globalTravel.controller;
 
 import com.globalTravel.entinty.Post;
+import com.globalTravel.entinty.PostRating;
+import com.globalTravel.repository.PostRatingRepository;
 import com.globalTravel.repository.PostRepository;
 import com.globalTravel.service.MediaService;
 import com.globalTravel.service.PostService;
@@ -19,6 +21,8 @@ public class PostController {
     PostRepository postRepository;
     @Autowired
     MediaService mediaService;
+    @Autowired
+    PostRatingRepository postRatingRepository;
 
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping(path = "/new")
@@ -59,4 +63,11 @@ public class PostController {
         return imagesPaths;
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
+    @PostMapping("/rate")
+    public PostRating postRating(@RequestBody PostRating rating){
+       return postRatingRepository.save(rating);
+    }
+
 }
+

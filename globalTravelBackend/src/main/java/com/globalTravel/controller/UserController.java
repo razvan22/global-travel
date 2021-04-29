@@ -10,7 +10,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.util.List;
 
 
 @RestController
@@ -36,10 +35,6 @@ public class UserController {
         return null;
     }
 
-    @GetMapping("/all")
-    public List<User> getAll(){
-        return userService.getAll();
-    }
 
     @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/check={email}")
